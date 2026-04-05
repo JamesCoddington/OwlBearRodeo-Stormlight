@@ -42,6 +42,8 @@ export function renderAttributes(
     const title = el("div", { className: "attribute-group-title" }, group.title);
     groupEl.appendChild(title);
 
+    const rowsContainer = el("div", { className: "attribute-group-rows" });
+
     for (const attr of group.attrs) {
       const row = el("div", { className: "attribute-row" });
       const nameEl = el("span", { className: "attribute-name" }, attr.label);
@@ -76,9 +78,10 @@ export function renderAttributes(
 
       vals.append(scoreInput, defLabel, defInput);
       row.append(nameEl, vals);
-      groupEl.appendChild(row);
+      rowsContainer.appendChild(row);
     }
 
+    groupEl.appendChild(rowsContainer);
     container.appendChild(groupEl);
   }
 

@@ -2,13 +2,28 @@ import { el } from "../../utils/dom.ts";
 import type { Weapon } from "../../models/character.ts";
 import type { Store } from "../../state/store.ts";
 
-const WEAPON_FIELDS: { key: keyof Weapon; label: string }[] = [
-  { key: "name", label: "Name" },
-  { key: "skill", label: "Skill" },
-  { key: "dmg", label: "Dmg" },
-  { key: "crit", label: "Crit" },
-  { key: "traits", label: "Traits" },
-];
+function weaponInput(
+  weapon: Weapon,
+  key: keyof Weapon,
+  placeholder: string,
+  onUpdate: (value: string) => void,
+): HTMLInputElement {
+  const input = el("input", {
+    className: "field-input",
+    type: "text",
+    placeholder,
+  });
+  input.value = weapon[key];
+  input.addEventListener("input", () => onUpdate(input.value));
+  return input;
+}
+
+function labeledField(label: string, input: HTMLElement): HTMLElement {
+  const wrapper = el("div");
+  wrapper.appendChild(el("div", { className: "weapon-field-label" }, label));
+  wrapper.appendChild(input);
+  return wrapper;
+}
 
 export function renderWeapons(store: Store): HTMLElement {
   const container = el("div");
@@ -17,29 +32,19 @@ export function renderWeapons(store: Store): HTMLElement {
     container.innerHTML = "";
     const weapons = store.get().weapons;
 
-    // Header
-    const headerRow = el("div", { className: "weapon-row" });
-    for (const f of WEAPON_FIELDS) {
-      headerRow.appendChild(el("span", { className: "weapon-header" }, f.label));
-    }
-    container.appendChild(headerRow);
-
-    // Rows
     weapons.forEach((weapon, i) => {
-      const row = el("div", { className: "weapon-row" });
-      for (const f of WEAPON_FIELDS) {
-        const input = el("input", {
-          className: "field-input",
-          type: "text",
-        });
-        input.value = weapon[f.key];
-        input.addEventListener("input", () => {
-          const updated = [...store.get().weapons];
-          updated[i] = { ...updated[i], [f.key]: input.value };
-          store.updateNested("weapons", updated);
-        });
-        row.appendChild(input);
+      const card = el("div", { className: "weapon-entry" });
+
+      function update(key: keyof Weapon, value: string): void {
+        const updated = [...store.get().weapons];
+        updated[i] = { ...updated[i], [key]: value };
+        store.updateNested("weapons", updated);
       }
+
+      // Top row: Name + Skill + remove button
+      const topRow = el("div", { className: "weapon-top-row" });
+      topRow.appendChild(weaponInput(weapon, "name", "Weapon name", (v) => update("name", v)));
+      topRow.appendChild(weaponInput(weapon, "skill", "Skill", (v) => update("skill", v)));
 
       const removeBtn = el("button", { className: "list-field-remove" }, "\u00D7");
       removeBtn.addEventListener("click", () => {
@@ -48,9 +53,17 @@ export function renderWeapons(store: Store): HTMLElement {
         store.updateNested("weapons", updated);
         rebuild();
       });
-      row.appendChild(removeBtn);
+      topRow.appendChild(removeBtn);
+      card.appendChild(topRow);
 
-      container.appendChild(row);
+      // Bottom row: Dmg, Crit, Traits
+      const bottomRow = el("div", { className: "weapon-bottom-row" });
+      bottomRow.appendChild(labeledField("Dmg", weaponInput(weapon, "dmg", "Dmg", (v) => update("dmg", v))));
+      bottomRow.appendChild(labeledField("Crit", weaponInput(weapon, "crit", "Crit", (v) => update("crit", v))));
+      bottomRow.appendChild(labeledField("Traits", weaponInput(weapon, "traits", "Traits", (v) => update("traits", v))));
+      card.appendChild(bottomRow);
+
+      container.appendChild(card);
     });
 
     const addBtn = el("button", { className: "list-field-add weapon-add" }, "+ Add Weapon");

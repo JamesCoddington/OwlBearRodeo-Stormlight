@@ -8,16 +8,16 @@
 
 /* Attribute groups */
 .attribute-groups {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
   margin-bottom: 8px;
 }
 
 .attribute-group {
   background: var(--sl-bg-surface);
   border-radius: var(--sl-radius-lg);
-  padding: 8px;
+  padding: 6px 10px;
   border: 1px solid var(--sl-border);
 }
 
@@ -27,22 +27,27 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: var(--sl-accent-gold);
-  text-align: center;
-  margin-bottom: 6px;
-}
-
-.attribute-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   margin-bottom: 4px;
 }
 
+.attribute-group-rows {
+  display: flex;
+  gap: 12px;
+}
+
+.attribute-row {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
 .attribute-name {
-  font-size: var(--sl-font-size-xs);
+  font-size: var(--sl-font-size-sm);
   color: var(--sl-text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.3px;
+  min-width: 28px;
 }
 
 .attribute-values {
@@ -52,7 +57,7 @@
 }
 
 .attribute-score {
-  width: 30px;
+  width: 34px;
 }
 
 .attribute-def-label {
@@ -62,7 +67,7 @@
 }
 
 .attribute-defense {
-  width: 30px;
+  width: 34px;
 }
 
 /* Resources section */
@@ -131,19 +136,47 @@
   gap: 4px;
 }
 
+.derived-grid .field-row {
+  min-width: 0;
+}
+
+.derived-grid .field-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* Weapons */
-.weapon-row {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr 2fr;
+.weapon-entry {
+  background: var(--sl-bg-surface);
+  border: 1px solid var(--sl-border);
+  border-radius: var(--sl-radius);
+  padding: 6px 8px;
+  margin-bottom: 4px;
+}
+
+.weapon-top-row {
+  display: flex;
   gap: 4px;
+  align-items: center;
   margin-bottom: 3px;
 }
 
-.weapon-header {
+.weapon-top-row .field-input {
+  flex: 1;
+}
+
+.weapon-bottom-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr;
+  gap: 4px;
+}
+
+.weapon-field-label {
   font-size: 9px;
   color: var(--sl-text-muted);
   text-transform: uppercase;
-  padding-bottom: 2px;
+  margin-bottom: 1px;
 }
 
 .weapon-add {
