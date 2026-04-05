@@ -1,0 +1,82 @@
+.stormlight-action {
+  background: var(--sl-bg-surface);
+  border: 1px solid var(--sl-border);
+  border-radius: var(--sl-radius);
+  padding: 6px 8px;
+  margin-bottom: 4px;
+}
+
+.stormlight-action-name {
+  font-size: var(--sl-font-size-sm);
+  font-weight: 600;
+  color: var(--sl-accent-blue);
+  margin-bottom: 2px;
+}
+
+.stormlight-action-desc {
+  font-size: var(--sl-font-size-xs);
+  color: var(--sl-text-secondary);
+  line-height: 1.4;
+}
+
+.ideals-list {
+  counter-reset: ideal;
+}
+
+.ideal-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.ideal-number {
+  font-size: var(--sl-font-size-xs);
+  color: var(--sl-accent-gold);
+  font-weight: 600;
+  min-width: 16px;
+  padding-top: 4px;
+}
+
+.ideal-row .field-input {
+  flex: 1;
+}
+
+.ideal-row .field-input[readonly] {
+  color: var(--sl-text-secondary);
+  font-style: italic;
+  border-color: transparent;
+  background: transparent;
+}
+
+.spren-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.surge-card {
+  background: var(--sl-bg-surface);
+  border: 1px solid var(--sl-border);
+  border-radius: var(--sl-radius-lg);
+  padding: 8px;
+  margin-bottom: 8px;
+}
+
+.surge-card-title {
+  font-size: var(--sl-font-size-sm);
+  font-weight: 600;
+  color: var(--sl-accent-blue);
+  margin-bottom: 6px;
+}
+
+.surge-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+}
+
+.surge-field-full {
+  grid-column: 1 / -1;
+}

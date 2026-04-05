@@ -1,0 +1,164 @@
+/* Header fields row */
+.stats-header-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+/* Attribute groups */
+.attribute-groups {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.attribute-group {
+  background: var(--sl-bg-surface);
+  border-radius: var(--sl-radius-lg);
+  padding: 8px;
+  border: 1px solid var(--sl-border);
+}
+
+.attribute-group-title {
+  font-size: var(--sl-font-size-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--sl-accent-gold);
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.attribute-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.attribute-name {
+  font-size: var(--sl-font-size-xs);
+  color: var(--sl-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.attribute-values {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.attribute-score {
+  width: 30px;
+}
+
+.attribute-def-label {
+  font-size: 9px;
+  color: var(--sl-text-muted);
+  text-transform: uppercase;
+}
+
+.attribute-defense {
+  width: 30px;
+}
+
+/* Resources section */
+.resources-section {
+  margin-bottom: 8px;
+}
+
+.deflect-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Skills */
+.skills-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px 12px;
+}
+
+.skill-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px 0;
+}
+
+.skill-name {
+  flex: 1;
+  font-size: var(--sl-font-size-sm);
+  color: var(--sl-text-primary);
+}
+
+.skill-attr {
+  font-size: 9px;
+  color: var(--sl-text-muted);
+  text-transform: uppercase;
+  min-width: 20px;
+}
+
+.skill-ranks {
+  width: 28px;
+}
+
+/* Custom skills */
+.custom-skill-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 3px;
+}
+
+.custom-skill-name {
+  flex: 1;
+  min-width: 0;
+}
+
+.custom-skill-attr {
+  width: 32px;
+}
+
+/* Derived stats */
+.derived-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+}
+
+/* Weapons */
+.weapon-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 2fr;
+  gap: 4px;
+  margin-bottom: 3px;
+}
+
+.weapon-header {
+  font-size: 9px;
+  color: var(--sl-text-muted);
+  text-transform: uppercase;
+  padding-bottom: 2px;
+}
+
+.weapon-add {
+  margin-top: 4px;
+}
+
+/* Talents */
+.talent-row {
+  display: grid;
+  grid-template-columns: 1fr 2fr auto;
+  gap: 4px;
+  margin-bottom: 3px;
+  align-items: center;
+}
+
+.talent-add {
+  margin-top: 4px;
+}

@@ -1,0 +1,64 @@
+:root {
+  --sl-bg-primary: #0d1b2a;
+  --sl-bg-secondary: #1b2838;
+  --sl-bg-surface: #1e2d3d;
+  --sl-bg-input: #152232;
+
+  --sl-accent-gold: #c8a84e;
+  --sl-accent-gold-dim: rgba(200, 168, 78, 0.2);
+  --sl-accent-blue: #4a9eff;
+  --sl-accent-glow: #6fb8ff;
+  --sl-accent-investiture: #a855f7;
+
+  --sl-text-primary: #e2e8f0;
+  --sl-text-secondary: #94a3b8;
+  --sl-text-muted: #64748b;
+
+  --sl-health: #ef4444;
+  --sl-health-bg: rgba(239, 68, 68, 0.15);
+  --sl-focus: #3b82f6;
+  --sl-focus-bg: rgba(59, 130, 246, 0.15);
+  --sl-investiture: #a855f7;
+  --sl-investiture-bg: rgba(168, 85, 247, 0.15);
+
+  --sl-border: #2d3f50;
+  --sl-border-accent: rgba(200, 168, 78, 0.3);
+
+  --sl-radius: 4px;
+  --sl-radius-lg: 8px;
+
+  --sl-font-body: "Segoe UI", system-ui, sans-serif;
+  --sl-font-heading: "Segoe UI", system-ui, sans-serif;
+
+  --sl-font-size-xs: 10px;
+  --sl-font-size-sm: 11px;
+  --sl-font-size-base: 13px;
+  --sl-font-size-lg: 15px;
+  --sl-font-size-xl: 18px;
+  --sl-font-size-2xl: 22px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--sl-font-body);
+  font-size: var(--sl-font-size-base);
+  color: var(--sl-text-primary);
+  background: var(--sl-bg-primary);
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+}
+
+input,
+textarea,
+select,
+button {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
