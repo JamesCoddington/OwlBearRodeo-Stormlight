@@ -59,7 +59,6 @@ export function renderWeapons(store: Store): HTMLElement {
       // Bottom row: Dmg, Crit, Traits
       const bottomRow = el("div", { className: "weapon-bottom-row" });
       bottomRow.appendChild(labeledField("Dmg", weaponInput(weapon, "dmg", "Dmg", (v) => update("dmg", v))));
-      bottomRow.appendChild(labeledField("Crit", weaponInput(weapon, "crit", "Crit", (v) => update("crit", v))));
       bottomRow.appendChild(labeledField("Traits", weaponInput(weapon, "traits", "Traits", (v) => update("traits", v))));
       card.appendChild(bottomRow);
 
@@ -70,7 +69,7 @@ export function renderWeapons(store: Store): HTMLElement {
     addBtn.addEventListener("click", () => {
       const updated = [
         ...store.get().weapons,
-        { name: "", skill: "", dmg: "", crit: "", traits: "" },
+        { name: "", skill: "", dmg: "", traits: "" },
       ];
       store.updateNested("weapons", updated);
       rebuild();

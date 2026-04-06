@@ -8,7 +8,64 @@ import { renderDerived } from "./derived.ts";
 import { renderWeapons } from "./weapons.ts";
 import { renderTalents } from "./talents.ts";
 import { renderConditions } from "./conditions.ts";
+import type { Attributes } from "../../models/character.ts";
+import type { Skill, CustomSkill } from "../../models/character.ts";
 import type { Store } from "../../state/store.ts";
+
+// Maps each Attributes key to the abbreviation used in skill.linkedAttribute
+const attrKeyToAbbrev: Partial<Record<keyof Attributes, string>> = {
+  strength: "str",
+  speed: "spd",
+  intellect: "int",
+  willpower: "wil",
+  awareness: "awa",
+  presence: "pre",
+};
+
+function cascadeAttributeToSkills(store: Store, nextAttrs: Attributes): void {
+  const prev = store.get().attributes;
+
+  // Derive defenses: each group's two scores + 10
+  const derived: Partial<Attributes> = {
+    physicalDefense:  nextAttrs.strength  + nextAttrs.speed     + 10,
+    cognitiveDefense: nextAttrs.intellect + nextAttrs.willpower + 10,
+    spiritualDefense: nextAttrs.awareness + nextAttrs.presence  + 10,
+  };
+
+  const finalAttrs: Attributes = { ...nextAttrs, ...derived };
+
+  // Find which score attributes actually changed
+  const changedAbbrevs = new Map<string, number>();
+  for (const [key, abbrev] of Object.entries(attrKeyToAbbrev) as [keyof Attributes, string][]) {
+    if (prev[key] !== nextAttrs[key]) {
+      changedAbbrevs.set(abbrev, nextAttrs[key] as number);
+    }
+  }
+
+  const current = store.get();
+
+  function updateSkillList<T extends Skill | CustomSkill>(skills: T[]): T[] {
+    return skills.map((skill) => {
+      const newScore = changedAbbrevs.get(skill.linkedAttribute);
+      return newScore !== undefined ? { ...skill, ranks: Math.min(newScore, 5) } : skill;
+    });
+  }
+
+  // Max focus = 2 + willpower
+  const focusMax = 2 + nextAttrs.willpower;
+  // Max investiture = 2 + higher of awareness or presence
+  const investitureMax = 2 + Math.max(nextAttrs.awareness, nextAttrs.presence);
+
+  store.update({
+    attributes: finalAttrs,
+    focus: { ...current.focus, max: focusMax },
+    investiture: { ...current.investiture, max: investitureMax },
+    physicalSkills: updateSkillList(current.physicalSkills),
+    cognitiveSkills: updateSkillList(current.cognitiveSkills),
+    spiritualSkills: updateSkillList(current.spiritualSkills),
+    customSkills: updateSkillList(current.customSkills),
+  });
+}
 
 export function renderStatsPage(container: HTMLElement, store: Store): void {
   const data = store.get();
@@ -28,7 +85,7 @@ export function renderStatsPage(container: HTMLElement, store: Store): void {
 
   // Attributes
   container.appendChild(
-    renderAttributes(data.attributes, (attrs) => store.update({ attributes: attrs })),
+    renderAttributes(store, (attrs) => cascadeAttributeToSkills(store, attrs)),
   );
 
   // Resources

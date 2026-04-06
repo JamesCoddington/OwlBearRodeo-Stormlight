@@ -1,15 +1,15 @@
-export interface AttributePair {
-  score: number;
-  defense: number;
-}
-
 export interface Attributes {
-  strength: AttributePair;
-  speed: AttributePair;
-  intellect: AttributePair;
-  willpower: AttributePair;
-  awareness: AttributePair;
-  presence: AttributePair;
+  strength: number;
+  speed: number;
+  physicalDefense: number;
+
+  intellect: number;
+  willpower: number;
+  cognitiveDefense: number;
+
+  awareness: number;
+  presence: number;
+  spiritualDefense: number;
 }
 
 export interface Resource {
@@ -21,12 +21,16 @@ export interface Skill {
   name: string;
   linkedAttribute: string;
   ranks: number;
+  bonusRanks: number;
+  starRanks: number;
 }
 
 export interface CustomSkill {
   name: string;
   linkedAttribute: string;
   ranks: number;
+  bonusRanks: number;
+  starRanks: number;
 }
 
 export interface DerivedStats {
@@ -40,7 +44,6 @@ export interface Weapon {
   name: string;
   skill: string;
   dmg: string;
-  crit: string;
   traits: string;
 }
 

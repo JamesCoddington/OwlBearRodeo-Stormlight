@@ -10,64 +10,53 @@
 .attribute-groups {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
   margin-bottom: 8px;
 }
 
-.attribute-group {
+.attribute-group-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   background: var(--sl-bg-surface);
-  border-radius: var(--sl-radius-lg);
-  padding: 6px 10px;
   border: 1px solid var(--sl-border);
+  border-radius: var(--sl-radius);
+  padding: 6px 10px;
 }
 
-.attribute-group-title {
+/* Each score cell (STR / SPD / etc.) */
+.attr-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  flex: 1;
+}
+
+/* The defense cell gets a left separator and slightly more weight */
+.attr-cell-defense {
+  border-left: 1px solid var(--sl-border);
+  padding-left: 8px;
+  flex: 1.4;
+}
+
+.attr-cell-label {
   font-size: var(--sl-font-size-xs);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: var(--sl-accent-gold);
-  margin-bottom: 4px;
-}
-
-.attribute-group-rows {
-  display: flex;
-  gap: 12px;
-}
-
-.attribute-row {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.attribute-name {
-  font-size: var(--sl-font-size-sm);
   color: var(--sl-text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-  min-width: 28px;
+  white-space: nowrap;
 }
 
-.attribute-values {
-  display: flex;
-  align-items: center;
-  gap: 4px;
+.attr-cell-defense .attr-cell-label {
+  color: var(--sl-accent-gold);
 }
 
-.attribute-score {
-  width: 34px;
-}
-
-.attribute-def-label {
-  font-size: 9px;
-  color: var(--sl-text-muted);
-  text-transform: uppercase;
-}
-
-.attribute-defense {
-  width: 34px;
+.attr-score-input,
+.attr-defense-input {
+  width: 44px;
+  text-align: center;
 }
 
 /* Resources section */
@@ -83,9 +72,9 @@
 
 /* Skills */
 .skills-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
 .skill-row {
@@ -108,8 +97,76 @@
   min-width: 20px;
 }
 
-.skill-ranks {
-  width: 28px;
+/* Skill bubble pips */
+.skill-bubbles {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.skill-bubble {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  border: 1.5px solid var(--sl-accent-blue);
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.12s, border-color 0.12s;
+  flex-shrink: 0;
+}
+
+.skill-bubble:hover {
+  border-color: var(--sl-accent-glow);
+  background: rgba(74, 158, 255, 0.2);
+}
+
+.skill-bubble.filled {
+  background: var(--sl-accent-blue);
+  border-color: var(--sl-accent-blue);
+}
+
+.skill-bubble.filled:hover {
+  background: var(--sl-accent-glow);
+  border-color: var(--sl-accent-glow);
+}
+
+/* Star pips */
+.skill-stars {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.skill-star {
+  width: 15px;
+  height: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  line-height: 1;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: var(--sl-border);
+  transition: color 0.12s;
+  flex-shrink: 0;
+}
+
+.skill-star:hover {
+  color: var(--sl-accent-gold);
+}
+
+.skill-star.filled {
+  color: var(--sl-accent-gold);
+}
+
+.skill-star.filled:hover {
+  color: #e8c96e;
 }
 
 /* Custom skills */
