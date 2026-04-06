@@ -1,7 +1,7 @@
 /* Editable field */
 .field-row {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 6px;
   margin-bottom: 4px;
 }
@@ -13,6 +13,7 @@
   letter-spacing: 0.5px;
   white-space: nowrap;
   flex-shrink: 0;
+  padding-top: 4px;
 }
 
 .field-input {
@@ -33,6 +34,14 @@
 
 .field-input::placeholder {
   color: var(--sl-text-muted);
+}
+
+/* Auto-growing textarea variant of field-input */
+.field-input-grow {
+  resize: none;
+  overflow: hidden;
+  line-height: 1.4;
+  align-self: flex-start;
 }
 
 /* Number input */

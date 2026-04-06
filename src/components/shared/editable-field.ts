@@ -1,5 +1,10 @@
 import { el } from "../../utils/dom.ts";
 
+function autoResize(textarea: HTMLTextAreaElement): void {
+  textarea.style.height = "auto";
+  textarea.style.height = `${textarea.scrollHeight}px`;
+}
+
 export function renderEditableField(
   label: string,
   value: string,
@@ -8,13 +13,18 @@ export function renderEditableField(
 ): HTMLElement {
   const row = el("div", { className: "field-row" });
   const labelEl = el("span", { className: "field-label" }, label);
-  const input = el("input", {
-    className: "field-input",
-    type: "text",
+  const textarea = el("textarea", {
+    className: "field-input field-input-grow",
     placeholder: placeholder ?? "",
+    rows: "1",
+  }) as HTMLTextAreaElement;
+  textarea.value = value;
+  textarea.addEventListener("input", () => {
+    autoResize(textarea);
+    onChange(textarea.value);
   });
-  input.value = value;
-  input.addEventListener("input", () => onChange(input.value));
-  row.append(labelEl, input);
+  // Size to content on initial render
+  requestAnimationFrame(() => autoResize(textarea));
+  row.append(labelEl, textarea);
   return row;
 }
