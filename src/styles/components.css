@@ -247,3 +247,17 @@
   border-color: var(--sl-accent-blue);
   color: var(--sl-accent-blue);
 }
+
+/* Read-only view (GM viewing a player's sheet) */
+.viewing-mode input,
+.viewing-mode textarea {
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.viewing-mode .header-action-btn,
+.viewing-mode .list-field-remove,
+.viewing-mode .list-field-add {
+  pointer-events: none;
+  opacity: 0.5;
+}
