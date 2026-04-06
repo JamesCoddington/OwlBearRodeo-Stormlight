@@ -9,14 +9,14 @@ export function renderIdeals(store: Store): HTMLElement {
   const data = store.get();
 
   // Radiant Order
-  container.appendChild(
-    renderEditableField("Order", data.radiantOrder, (v) => store.update({ radiantOrder: v }), "Radiant Order"),
-  );
+  const orderField = renderEditableField("Order", data.radiantOrder, (v) => store.update({ radiantOrder: v }), "Radiant Order");
+  container.appendChild(orderField);
 
   const title = el("div", { className: "section-title" }, "Ideals");
   container.appendChild(title);
 
   const list = el("div", { className: "ideals-list" });
+  const idealInputs: HTMLInputElement[] = [];
 
   data.ideals.forEach((ideal, i) => {
     const row = el("div", { className: "ideal-row" });
@@ -28,6 +28,7 @@ export function renderIdeals(store: Store): HTMLElement {
       placeholder: i === 0 ? "" : `${IDEAL_LABELS[i]} Ideal...`,
     });
     input.value = ideal;
+    idealInputs.push(input);
 
     if (i === 0) {
       input.readOnly = true;
@@ -44,5 +45,15 @@ export function renderIdeals(store: Store): HTMLElement {
   });
 
   container.appendChild(list);
+
+  const orderInput = orderField.querySelector("textarea") as HTMLTextAreaElement;
+  store.subscribe(() => {
+    const d = store.get();
+    if (document.activeElement !== orderInput) orderInput.value = d.radiantOrder;
+    d.ideals.forEach((ideal, i) => {
+      if (idealInputs[i] && document.activeElement !== idealInputs[i]) idealInputs[i].value = ideal;
+    });
+  });
+
   return container;
 }

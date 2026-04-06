@@ -68,10 +68,18 @@ function renderSurgeCard(
 
 export function renderSurges(store: Store): HTMLElement {
   const container = el("div");
-  const data = store.get();
 
-  container.appendChild(renderSurgeCard(0, data.surges[0], store));
-  container.appendChild(renderSurgeCard(1, data.surges[1], store));
+  function rebuild(): void {
+    container.innerHTML = "";
+    const data = store.get();
+    container.appendChild(renderSurgeCard(0, data.surges[0], store));
+    container.appendChild(renderSurgeCard(1, data.surges[1], store));
+  }
+
+  rebuild();
+  store.subscribe(() => {
+    if (!container.contains(document.activeElement)) rebuild();
+  });
 
   return container;
 }

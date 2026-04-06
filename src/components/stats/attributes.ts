@@ -64,6 +64,7 @@ export function renderAttributes(
 ): HTMLElement {
   const container = el("div", { className: "attribute-groups" });
   const defenseInputs: { key: keyof Attributes; input: HTMLInputElement }[] = [];
+  const scoreInputs: { key: keyof Attributes; input: HTMLInputElement }[] = [];
 
   for (const group of groups) {
     const attributes = store.get().attributes;
@@ -72,11 +73,13 @@ export function renderAttributes(
     const firstCell = scoreCell(group.first.label, attributes[group.first.key] as number, (v) =>
       onChange({ ...store.get().attributes, [group.first.key]: v }),
     );
+    scoreInputs.push({ key: group.first.key, input: (firstCell as unknown as { _input: HTMLInputElement })._input });
     row.appendChild(firstCell as unknown as HTMLElement);
 
     const secondCell = scoreCell(group.second.label, attributes[group.second.key] as number, (v) =>
       onChange({ ...store.get().attributes, [group.second.key]: v }),
     );
+    scoreInputs.push({ key: group.second.key, input: (secondCell as unknown as { _input: HTMLInputElement })._input });
     row.appendChild(secondCell as unknown as HTMLElement);
 
     const defense = defenseCell(group.title, attributes[group.defenseKey] as number);
@@ -86,9 +89,14 @@ export function renderAttributes(
     container.appendChild(row);
   }
 
-  // Sync defense inputs whenever the store updates (they are auto-calculated)
   store.subscribe(() => {
     const attrs = store.get().attributes;
+    for (const { key, input } of scoreInputs) {
+      if (document.activeElement !== input) {
+        const latest = String(attrs[key] as number);
+        if (input.value !== latest) input.value = latest;
+      }
+    }
     for (const { key, input } of defenseInputs) {
       const latest = String(attrs[key] as number);
       if (input.value !== latest) input.value = latest;

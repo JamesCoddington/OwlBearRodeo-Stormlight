@@ -60,5 +60,8 @@ export function renderTalents(store: Store): HTMLElement {
   }
 
   rebuild();
+  store.subscribe(() => {
+    if (!container.contains(document.activeElement)) rebuild();
+  });
   return container;
 }

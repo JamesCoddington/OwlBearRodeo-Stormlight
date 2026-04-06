@@ -27,6 +27,12 @@ export function renderConditions(store: Store): HTMLElement {
     store.update({ expertises: expTextarea.value });
   });
 
+  store.subscribe(() => {
+    const d = store.get();
+    if (document.activeElement !== condTextarea) condTextarea.value = d.conditions;
+    if (document.activeElement !== expTextarea) expTextarea.value = d.expertises;
+  });
+
   container.append(condLabel, condTextarea, expLabel, expTextarea);
   return container;
 }

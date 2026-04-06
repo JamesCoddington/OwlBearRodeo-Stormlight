@@ -10,12 +10,9 @@ export function renderSpren(store: Store): HTMLElement {
   container.appendChild(title);
 
   const grid = el("div", { className: "spren-info" });
-  grid.appendChild(
-    renderEditableField("Name", data.sprenName, (v) => store.update({ sprenName: v }), "Spren name"),
-  );
-  grid.appendChild(
-    renderEditableField("Bond Range", data.sprenBondRange, (v) => store.update({ sprenBondRange: v }), "Range"),
-  );
+  const nameField = renderEditableField("Name", data.sprenName, (v) => store.update({ sprenName: v }), "Spren name");
+  const bondField = renderEditableField("Bond Range", data.sprenBondRange, (v) => store.update({ sprenBondRange: v }), "Range");
+  grid.append(nameField, bondField);
   container.appendChild(grid);
 
   // Personality textarea
@@ -30,5 +27,15 @@ export function renderSpren(store: Store): HTMLElement {
   });
 
   container.append(persLabel, persTextarea);
+
+  const nameInput = nameField.querySelector("textarea") as HTMLTextAreaElement;
+  const bondInput = bondField.querySelector("textarea") as HTMLTextAreaElement;
+  store.subscribe(() => {
+    const d = store.get();
+    if (document.activeElement !== nameInput) nameInput.value = d.sprenName;
+    if (document.activeElement !== bondInput) bondInput.value = d.sprenBondRange;
+    if (document.activeElement !== persTextarea) persTextarea.value = d.sprenPersonality;
+  });
+
   return container;
 }
