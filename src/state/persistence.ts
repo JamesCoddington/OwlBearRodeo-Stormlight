@@ -24,6 +24,18 @@ function getPlayerId(isOBR: boolean): string {
   return "local";
 }
 
+function migrateCharacter(data: CharacterSheet): CharacterSheet {
+  // Migrate goals from legacy string[] to Goal[]
+  const rawGoals = data.goals as unknown[];
+  if (rawGoals.length > 0 && typeof rawGoals[0] === "string") {
+    return {
+      ...data,
+      goals: (rawGoals as string[]).map((text) => ({ text, achieved: 0 })),
+    };
+  }
+  return data;
+}
+
 export async function loadCharacter(isOBR: boolean): Promise<CharacterSheet> {
   const playerId = getPlayerId(isOBR);
 
@@ -49,11 +61,13 @@ export async function loadCharacter(isOBR: boolean): Promise<CharacterSheet> {
 
   // Use whichever is more recent
   if (localEnvelope && obrEnvelope) {
-    return localEnvelope.timestamp > obrEnvelope.timestamp
+    const chosen = localEnvelope.timestamp > obrEnvelope.timestamp
       ? localEnvelope.data
       : obrEnvelope.data;
+    return migrateCharacter(chosen);
   }
-  return localEnvelope?.data ?? obrEnvelope?.data ?? createDefaultCharacter();
+  const raw = localEnvelope?.data ?? obrEnvelope?.data ?? createDefaultCharacter();
+  return migrateCharacter(raw);
 }
 
 function saveToLocalStorage(playerId: string, data: CharacterSheet): void {

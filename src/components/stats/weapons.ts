@@ -2,20 +2,29 @@ import { el } from "../../utils/dom.ts";
 import type { Weapon } from "../../models/character.ts";
 import type { Store } from "../../state/store.ts";
 
+function autoResize(textarea: HTMLTextAreaElement): void {
+  textarea.style.height = "auto";
+  textarea.style.height = `${textarea.scrollHeight}px`;
+}
+
 function weaponInput(
   weapon: Weapon,
   key: keyof Weapon,
   placeholder: string,
   onUpdate: (value: string) => void,
-): HTMLInputElement {
-  const input = el("input", {
-    className: "field-input",
-    type: "text",
+): HTMLTextAreaElement {
+  const textarea = el("textarea", {
+    className: "field-input field-input-grow",
     placeholder,
+    rows: "1",
+  }) as HTMLTextAreaElement;
+  textarea.value = weapon[key];
+  textarea.addEventListener("input", () => {
+    autoResize(textarea);
+    onUpdate(textarea.value);
   });
-  input.value = weapon[key];
-  input.addEventListener("input", () => onUpdate(input.value));
-  return input;
+  requestAnimationFrame(() => autoResize(textarea));
+  return textarea;
 }
 
 function labeledField(label: string, input: HTMLElement): HTMLElement {

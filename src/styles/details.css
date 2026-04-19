@@ -5,6 +5,25 @@
   margin-bottom: 8px;
 }
 
+.goal-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-bottom: 3px;
+}
+
+.goal-row .field-input-grow {
+  flex: 1;
+}
+
+.goal-row .skill-bubbles {
+  margin-top: 5px;
+}
+
+.goal-row .list-field-remove {
+  margin-top: 2px;
+}
+
 .purpose-obstacle {
   display: grid;
   grid-template-columns: 1fr 1fr;

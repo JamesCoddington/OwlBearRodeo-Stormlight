@@ -52,6 +52,11 @@ export interface Talent {
   description: string;
 }
 
+export interface Goal {
+  text: string;
+  achieved: number;
+}
+
 export interface Surge {
   name: string;
   effect: string;
@@ -100,7 +105,7 @@ export interface CharacterSheet {
   appearance: string;
   purpose: string;
   obstacle: string;
-  goals: string[];
+  goals: Goal[];
   otherTalents: string;
   armorEquipment: string;
   marks: string;
