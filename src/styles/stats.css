@@ -252,3 +252,45 @@
 .talent-add {
   margin-top: 4px;
 }
+
+/* Expertises */
+.expertise-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px;
+  margin-bottom: 3px;
+  align-items: center;
+}
+
+.expertise-add {
+  margin-top: 4px;
+}
+
+/* Conditions */
+.condition-entry {
+  background: var(--sl-bg-surface);
+  border: 1px solid var(--sl-border);
+  border-radius: var(--sl-radius);
+  padding: 6px 8px;
+  margin-bottom: 4px;
+}
+
+.condition-top-row {
+  display: flex;
+  gap: 4px;
+  align-items: flex-end;
+  margin-bottom: 3px;
+}
+
+.condition-top-row > div {
+  flex: 1;
+}
+
+.condition-desc-row .field-input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.condition-add {
+  margin-top: 4px;
+}

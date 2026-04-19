@@ -66,8 +66,8 @@ export function createDefaultCharacter(): CharacterSheet {
       sensesRange: "",
     },
 
-    conditions: "",
-    expertises: "",
+    conditions: [],
+    expertises: [],
     weapons: [],
     talents: [],
 

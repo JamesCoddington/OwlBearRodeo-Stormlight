@@ -7,7 +7,7 @@ import { renderSkills } from "./skills.ts";
 import { renderDerived } from "./derived.ts";
 import { renderWeapons } from "./weapons.ts";
 import { renderTalents } from "./talents.ts";
-import { renderConditions } from "./conditions.ts";
+import { renderConditions, renderExpertises } from "./conditions.ts";
 import type { Attributes } from "../../models/character.ts";
 import type { Skill, CustomSkill } from "../../models/character.ts";
 import type { Store } from "../../state/store.ts";
@@ -105,9 +105,16 @@ export function renderStatsPage(container: HTMLElement, store: Store): void {
     }),
   );
 
-  // Conditions & Expertises
+  // Expertises
   container.appendChild(
-    renderCollapsible("Conditions & Expertises", false, (body) => {
+    renderCollapsible("Expertises", false, (body) => {
+      body.appendChild(renderExpertises(store));
+    }),
+  );
+
+  // Conditions
+  container.appendChild(
+    renderCollapsible("Conditions", false, (body) => {
       body.appendChild(renderConditions(store));
     }),
   );

@@ -52,6 +52,16 @@ export interface Talent {
   description: string;
 }
 
+export interface Condition {
+  type: string;
+  time: string;
+  description: string;
+}
+
+export interface Expertise {
+  type: string;
+}
+
 export interface Goal {
   text: string;
   achieved: number;
@@ -96,8 +106,8 @@ export interface CharacterSheet {
   derivedStats: DerivedStats;
 
   // Misc stats page
-  conditions: string;
-  expertises: string;
+  conditions: Condition[];
+  expertises: Expertise[];
   weapons: Weapon[];
   talents: Talent[];
 

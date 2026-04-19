@@ -25,14 +25,35 @@ function getPlayerId(isOBR: boolean): string {
 }
 
 function migrateCharacter(data: CharacterSheet): CharacterSheet {
+  const raw = data as unknown as Record<string, unknown>;
+
   // Migrate goals from legacy string[] to Goal[]
   const rawGoals = data.goals as unknown[];
   if (rawGoals.length > 0 && typeof rawGoals[0] === "string") {
-    return {
+    data = {
       ...data,
       goals: (rawGoals as string[]).map((text) => ({ text, achieved: 0 })),
     };
   }
+
+  // Migrate conditions from legacy string to Condition[]
+  if (typeof raw.conditions === "string") {
+    const s = raw.conditions;
+    data = {
+      ...data,
+      conditions: s ? [{ type: s, time: "", description: "" }] : [],
+    };
+  }
+
+  // Migrate expertises from legacy string to Expertise[]
+  if (typeof raw.expertises === "string") {
+    const s = raw.expertises;
+    data = {
+      ...data,
+      expertises: s ? [{ type: s }] : [],
+    };
+  }
+
   return data;
 }
 
